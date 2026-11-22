@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 AI 黑客松 · 看见问题，就是开始 | 河北工程大学计算机协会</title>
+  <meta name="description" content="河北工程大学计算机协会 × 夏野黑客松 · 2026 年 AI 黑客松。看见问题，就是开始。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-track="0">
+  <!-- Intro Curtain -->
+  <div class="intro-curtain" id="introCurtain" aria-hidden="true">
+    <div class="intro-curtain__inner">
+      <div class="intro-compass">
+        <svg viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" />
+          <polygon points="32,8 37,32 32,56 27,32" fill="currentColor" opacity="0.9" />
+          <circle cx="32" cy="32" r="4" fill="#04070E" />
+        </svg>
+      </div>
+      <div class="intro-label">HEBEU · 2026 AI HACKATHON</div>
+    </div>
+  </div>
+
+  <!-- Custom Magnetic Cursor -->
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <!-- Top Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Ambient Noise + Dynamic Glow Layer -->
+  <div class="ambient-glow" id="ambientGlow" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Floating Glass Header -->
+  <header class="nav" id="mainNav">
+    <div class="nav__inner">
+      <a href="#hero" class="nav__brand magnetic" data-strength="14">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="13.5" stroke="currentColor" stroke-width="1.4" opacity="0.65" />
+            <path d="M16 4L19.2 16L16 28L12.8 16L16 4Z" fill="currentColor" />
+            <circle cx="16" cy="16" r="2.4" fill="#04070E" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>AI HACKATHON</strong>
+          <span>HEBEU · 2026</span>
+        </span>
+      </a>
+
+      <nav class="nav__links" aria-label="主导航">
+        <a href="#tracks" class="nav__link magnetic" data-strength="10">赛道</a>
+        <a href="#rewards" class="nav__link magnetic" data-strength="10">激励</a>
+        <a href="#voyage" class="nav__link magnetic" data-strength="10">赛程</a>
+        <a href="#judging" class="nav__link magnetic" data-strength="10">评审</a>
+      </nav>
+
+      <div class="nav__actions">
+        <span class="live-badge">
+          <span class="live-dot"></span>
+          <span>11.23–11.30 征集中</span>
+        </span>
+        <button class="btn-nav magnetic" id="openPassNav" data-strength="16" type="button">
+          <span>登船证</span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== HERO ==================== -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="oceanCanvas" aria-hidden="true"></canvas>
+
+      <!-- Decorative Nautical HUD -->
+      <div class="hero__hud hero__hud--tl" aria-hidden="true">
+        <span class="mono-tag">VOYAGE // 2026.11</span>
+        <span class="hud-line"></span>
+      </div>
+      <div class="hero__hud hero__hud--tr" aria-hidden="true">
+        <span class="mono-tag" id="cursorCoords">HDG 000° · LIVE</span>
+      </div>
+
+      <div class="hero__content container">
+        <div class="hero__eyebrow reveal-hero">
+          <span class="eyebrow-dot"></span>
+          <span>河北工程大学计算机协会 × 夏野黑客松</span>
+        </div>
+
+        <h1 class="hero__title" aria-label="看见问题，就是开始">
+          <span class="hero__title-line">
+            <span class="kinetic-word" data-split>看见问题，</span>
+          </span>
+          <span class="hero__title-line hero__title-line--accent">
+            <span class="kinetic-word" data-split>就是开始</span>
+          </span>
+        </h1>
+
+        <p class="hero__tagline reveal-hero">
+          与其被技术的浪潮推着走，不如自己掌舵。这一次远航，我们不预设终点。
+        </p>
+
+        <!-- Live Countdown -->
+        <div class="countdown-dock reveal-hero" aria-label="作品提交倒计时">
+          <div class="countdown-dock__label">
+            <span class="pulse-ring"></span>
+            <span id="countdownLabel">作品截稿倒计时 · 11.30 23:59</span>
+          </div>
+          <div class="countdown-grid" id="countdownGrid">
+            <div class="cd-unit">
+              <span class="cd-num" id="cdDays">00</span>
+              <span class="cd-key">DAYS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+              <span class="cd-num" id="cdHours">00</span>
+              <span class="cd-key">HRS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+              <span class="cd-num" id="cdMins">00</span>
+              <span class="cd-key">MIN</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+              <span class="cd-num" id="cdSecs">00</span>
+              <span class="cd-key">SEC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Group -->
+        <div class="hero__cta reveal-hero">
+          <button class="btn-primary magnetic" id="openPassHero" data-strength="20" type="button">
+            <span class="btn-primary__glow" aria-hidden="true"></span>
+            <span class="btn-primary__text">立即启航 · 生成登船证</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <a href="#tracks" class="btn-ghost magnetic" data-strength="14">
+            <span>探索三条航线</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 4V16M10 16L5 11M10 16L15 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Compact Animated Stats Strip -->
+        <div class="hero__stats reveal-hero">
+          <div class="stat-pill">
+            <span class="stat-pill__val"><em data-count="500" data-prefix="$">$0</em></span>
+            <span class="stat-pill__label">OpenDev 算力上限 / 人</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-pill__val"><em data-count="1200" data-prefix="¥">¥0</em></span>
+            <span class="stat-pill__label">一等奖现金激励</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-pill__val"><em data-count="3">0</em> 条</span>
+            <span class="stat-pill__label">自由命题赛道</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-pill__val">0 元</span>
+            <span class="stat-pill__label">1–5 人组队 · 栈不限</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Cue -->
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="scroll-cue__mouse"><span class="scroll-cue__wheel"></span></span>
+        <span class="scroll-cue__text">SCROLL</span>
+      </div>
+    </section>
+
+    <!-- ==================== KINETIC MARQUEE ==================== -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee" id="kineticMarquee">
+        <div class="marquee__track">
+          <span>看见问题 · 就是开始</span><i>✦</i>
+          <span>OPENDEV $500 算力</span><i>✦</i>
+          <span>AI × 知识与探索</span><i>✦</i>
+          <span>AI × 陪伴与交互</span><i>✦</i>
+          <span>AI × 出海</span><i>✦</i>
+          <span>连尚集团实习直通</span><i>✦</i>
+          <span>连尚孵化器对接</span><i>✦</i>
+          <span>12.06 现场开奖</span><i>✦</i>
+        </div>
+        <div class="marquee__track" aria-hidden="true">
+          <span>看见问题 · 就是开始</span><i>✦</i>
+          <span>OPENDEV $500 算力</span><i>✦</i>
+          <span>AI × 知识与探索</span><i>✦</i>
+          <span>AI × 陪伴与交互</span><i>✦</i>
+          <span>AI × 出海</span><i>✦</i>
+          <span>连尚集团实习直通</span><i>✦</i>
+          <span>连尚孵化器对接</span><i>✦</i>
+          <span>12.06 现场开奖</span><i>✦</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TRACKS ==================== -->
+    <section class="section tracks" id="tracks">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-index">01 / TRACKS</div>
+          <h2 class="section-title">三条航线</h2>
+          <p class="section-sub">不设统一命题 · 从真实问题出发</p>
+        </div>
+
+        <div class="tracks-stage">
+          <!-- Interactive Kinetic Totem Viewport -->
+          <div class="track-viewport spotlight-card tilt-card reveal" id="trackViewport">
+            <div class="track-viewport__header">
+              <span class="track-viewport__code" id="trackCode">TRACK // 01</span>
+              <span class="track-viewport__badge" id="trackAward">最佳知识探索奖 · 1 支</span>
+            </div>
+            <div class="track-viewport__canvas-wrap">
+              <canvas id="trackCanvas" aria-label="赛道动态视觉演示"></canvas>
+            </div>
+            <div class="track-viewport__footer">
+              <h3 class="track-viewport__name" id="trackActiveName">AI × 知识与探索</h3>
+              <p class="track-viewport__slogan" id="trackActiveSlogan">把散落资料变成清晰路径</p>
+              <div class="track-viewport__chips" id="trackActiveChips">
+                <span>课程助手</span>
+                <span>文献梳理</span>
+                <span>领域问答</span>
+                <span>复杂讲解</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Track Selector Stack -->
+          <div class="track-list" role="tablist" aria-label="活动赛道">
+            <button class="track-card is-active spotlight-card" role="tab" aria-selected="true" data-track-idx="0" type="button">
+              <div class="track-card__bar" aria-hidden="true"></div>
+              <div class="track-card__top">
+                <span class="track-card__num">01</span>
+                <span class="track-card__arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="track-card__title">AI × 知识与探索</h3>
+              <p class="track-card__desc">把散落资料变成清晰路径</p>
+              <div class="track-card__tags">
+                <span>检索</span><span>科研</span><span>查证</span><span>讲解</span>
+              </div>
+            </button>
+
+            <button class="track-card spotlight-card" role="tab" aria-selected="false" data-track-idx="1" type="button">
+              <div class="track-card__bar" aria-hidden="true"></div>
+              <div class="track-card__top">
+                <span class="track-card__num">02</span>
+                <span class="track-card__arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="track-card__title">AI × 陪伴与交互</h3>
+              <p class="track-card__desc">让对话真正被理解与承接</p>
+              <div class="track-card__tags">
+                <span>对话</span><span>陪伴</span><span>协作</span><span>无障碍</span>
+              </div>
+            </button>
+
+            <button class="track-card spotlight-card" role="tab" aria-selected="false" data-track-idx="2" type="button">
+              <div class="track-card__bar" aria-hidden="true"></div>
+              <div class="track-card__top">
+                <span class="track-card__num">03</span>
+                <span class="track-card__arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="track-card__title">AI × 出海</h3>
+              <p class="track-card__desc">从校园出发，直面全球用户</p>
+              <div class="track-card__tags">
+                <span>海外市场</span><span>本土化</span><span>跨境产品</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REWARDS & TOKEN BOOSTER ==================== -->
+    <section class="section rewards" id="rewards">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-index">02 / REWARDS</div>
+          <h2 class="section-title">算力 · 奖金 · 孵化</h2>
+          <p class="section-sub">入选即得算力 · 获奖叠加实习与孵化</p>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Interactive OpenDev Token Booster -->
+          <div class="bento-card bento-card--token spotlight-card tilt-card reveal" id="tokenCard">
+            <canvas class="spark-canvas" id="sparkCanvas" aria-hidden="true"></canvas>
+            <div class="bento-card__meta">
+              <span class="chip chip--cyan">OPENDEV 独家算力</span>
+              <span class="mono-muted">按人发放 · 赛期内使用</span>
+            </div>
+
+            <div class="token-display">
+              <div class="token-amount" id="tokenAmount">$200</div>
+              <div class="token-breakdown" id="tokenBreakdown">基础入选 $200</div>
+            </div>
+
+            <!-- Glowing Energy Gauge -->
+            <div class="energy-gauge" aria-hidden="true">
+              <div class="energy-gauge__fill" id="energyFill" style="width: 40%"></div>
+              <div class="energy-gauge__ticks">
+                <span>$200</span><span>$300</span><span>$400</span><span>$500</span>
+              </div>
+            </div>
+
+            <!-- Interactive Invite Switcher -->
+            <div class="booster-controls">
+              <span class="booster-label">模拟成功邀请入选伙伴</span>
+              <div class="booster-pills" role="group" aria-label="邀请人数模拟">
+                <button class="booster-pill is-active" data-invites="0" type="button">0 人</button>
+                <button class="booster-pill" data-invites="1" type="button">+1 人</button>
+                <button class="booster-pill" data-invites="2" type="button">+2 人</button>
+                <button class="booster-pill" data-invites="3" type="button">+3 满额</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Cash Awards -->
+          <div class="bento-card bento-card--cash spotlight-card tilt-card reveal">
+            <div class="bento-card__meta">
+              <span class="chip chip--gold">综合奖</span>
+              <span class="mono-muted">跨赛道评选</span>
+            </div>
+
+            <div class="grand-prize">
+              <span class="grand-prize__tier">一等奖 · 1 支</span>
+              <div class="grand-prize__num">¥1,200</div>
+            </div>
+
+            <div class="sub-prizes">
+              <div class="sub-prize">
+                <span class="sub-prize__name">二等奖</span>
+                <span class="sub-prize__val">¥600 <em>× 2 支</em></span>
+              </div>
+              <div class="sub-prize">
+                <span class="sub-prize__name">三等奖</span>
+                <span class="sub-prize__val">¥200 <em>× 3 支</em></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Track & Special Honors -->
+          <div class="bento-card bento-card--honors spotlight-card tilt-card reveal">
+            <div class="bento-card__meta">
+              <span class="chip chip--blue">专项与荣誉</span>
+            </div>
+            <div class="honor-orbit">
+              <div class="honor-item">
+                <strong>3 支</strong>
+                <span>赛道单项奖</span>
+              </div>
+              <div class="honor-item">
+                <strong>1 支</strong>
+                <span>现场/线上人气奖</span>
+              </div>
+              <div class="honor-item">
+                <strong>全员</strong>
+                <span>有效提交参赛证书</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Career & Incubation Fast-Track -->
+          <div class="bento-card bento-card--career spotlight-card tilt-card reveal">
+            <div class="foil-sheen" aria-hidden="true"></div>
+            <div class="bento-card__meta">
+              <span class="chip chip--amber">生态直通</span>
+              <span class="mono-muted">获奖及评委推荐</span>
+            </div>
+            <div class="career-grid">
+              <div class="career-pillar">
+                <div class="career-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M12 12L20 7.5M12 12V21M12 12L4 7.5" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>连尚集团实习</h3>
+                <p>优秀选手直通面试与实习机会</p>
+              </div>
+              <div class="career-divider" aria-hidden="true"></div>
+              <div class="career-pillar">
+                <div class="career-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <h3>连尚孵化器</h3>
+                <p>技术扶持、算力资源与早期投资对接</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VOYAGE TIMELINE ==================== -->
+    <section class="section voyage" id="voyage">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-index">03 / VOYAGE</div>
+          <h2 class="section-title">14 天航程</h2>
+          <p class="section-sub">全程线上推进 · 12.06 同步直播</p>
+        </div>
+
+        <div class="voyage-map reveal" id="voyageMap">
+          <!-- Animated SVG Sea Route -->
+          <svg class="voyage-svg" viewBox="0 0 1100 180" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#2EE6D6" />
+                <stop offset="50%" stop-color="#4F8BFF" />
+                <stop offset="100%" stop-color="#FF9F43" />
+              </linearGradient>
+              <filter id="routeGlow">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <path class="route-bg" d="M 40,120 C 210,120 220,50 380,65 C 540,80 570,135 730,115 C 890,95 920,45 1060,55" />
+            <path class="route-active" id="routePath" d="M 40,120 C 210,120 220,50 380,65 C 540,80 570,135 730,115 C 890,95 920,45 1060,55" filter="url(#routeGlow)" />
+          </svg>
+
+          <div class="voyage-nodes">
+            <article class="voyage-node is-passed">
+              <div class="voyage-beacon"><span></span></div>
+              <div class="voyage-date">11.23</div>
+              <h3 class="voyage-title">起航开赛</h3>
+              <span class="voyage-tag">规则生效 · 开发开启</span>
+            </article>
+
+            <article class="voyage-node is-current">
+              <div class="voyage-beacon"><span></span></div>
+              <div class="voyage-date">11.23 — 11.30 <em class="tag-live">NOW</em></div>
+              <h3 class="voyage-title">造物与提交</h3>
+              <span class="voyage-tag">可运行作品 · 源码 · 申请表</span>
+            </article>
+
+            <article class="voyage-node">
+              <div class="voyage-beacon"><span></span></div>
+              <div class="voyage-date">12.01 — 12.05</div>
+              <h3 class="voyage-title">线上初评</h3>
+              <span class="voyage-tag">独立打分 · 公布入围</span>
+            </article>
+
+            <article class="voyage-node is-finale">
+              <div class="voyage-beacon"><span></span></div>
+              <div class="voyage-date">12.06 · 19:00</div>
+              <h3 class="voyage-title">路演与开奖</h3>
+              <span class="voyage-tag">专家点评 · 直播颁奖</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== JUDGING RADAR ==================== -->
+    <section class="section judging" id="judging">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-index">04 / JUDGING</div>
+          <h2 class="section-title">百分制罗盘</h2>
+          <p class="section-sub">先线上初评 · 后专家现场点评</p>
+        </div>
+
+        <div class="judging-layout">
+          <!-- Interactive Pentagon Radar -->
+          <div class="radar-card spotlight-card reveal" id="radarCard">
+            <svg class="radar-svg" id="radarSvg" viewBox="-48 -14 456 388" aria-label="百分制评分维度图">
+              <!-- Concentric Pentagons -->
+              <g class="radar-grid" id="radarGrid"></g>
+              <!-- Axis Lines -->
+              <g class="radar-axes" id="radarAxes"></g>
+              <!-- Animated Data Polygon -->
+              <polygon class="radar-poly" id="radarPoly" points="180,180 180,180 180,180 180,180 180,180" />
+              <!-- Laser Beam on Hover -->
+              <line class="radar-beam" id="radarBeam" x1="180" y1="180" x2="180" y2="180" />
+              <!-- Interactive Vertex Dots -->
+              <g class="radar-nodes" id="radarNodes"></g>
+              <!-- Center Score Readout -->
+              <text class="radar-center-num" id="radarCenterNum" x="180" y="176" text-anchor="middle">100</text>
+              <text class="radar-center-sub" id="radarCenterSub" x="180" y="198" text-anchor="middle">TOTAL PTS</text>
+            </svg>
+            <div class="radar-hint" id="radarHint">悬停维度查看考察焦点</div>
+          </div>
+
+          <!-- Synced Score Bars & Quick Rules -->
+          <div class="judging-panel reveal">
+            <div class="score-bars" id="scoreBars">
+              <div class="score-row is-active" data-axis="0">
+                <div class="score-row__head">
+                  <span class="score-row__name">问题真实性</span>
+                  <span class="score-row__val">25<em>分</em></span>
+                </div>
+                <div class="score-row__track"><span style="--w: 100%"></span></div>
+                <p class="score-row__tip">真实场景需求 · 目标用户清晰</p>
+              </div>
+
+              <div class="score-row" data-axis="1">
+                <div class="score-row__head">
+                  <span class="score-row__name">方案与完成度</span>
+                  <span class="score-row__val">25<em>分</em></span>
+                </div>
+                <div class="score-row__track"><span style="--w: 100%"></span></div>
+                <p class="score-row__tip">功能闭环完整 · 实机稳定可演示</p>
+              </div>
+
+              <div class="score-row" data-axis="2">
+                <div class="score-row__head">
+                  <span class="score-row__name">技术实现</span>
+                  <span class="score-row__val">20<em>分</em></span>
+                </div>
+                <div class="score-row__track"><span style="--w: 80%"></span></div>
+                <p class="score-row__tip">选型合理 · 工程规范可复现</p>
+              </div>
+
+              <div class="score-row" data-axis="3">
+                <div class="score-row__head">
+                  <span class="score-row__name">价值与潜力</span>
+                  <span class="score-row__val">20<em>分</em></span>
+                </div>
+                <div class="score-row__track"><span style="--w: 80%"></span></div>
+                <p class="score-row__tip">对他人有用 · 具备迭代与产品路径</p>
+              </div>
+
+              <div class="score-row" data-axis="4">
+                <div class="score-row__head">
+                  <span class="score-row__name">表达与演示</span>
+                  <span class="score-row__val">10<em>分</em></span>
+                </div>
+                <div class="score-row__track"><span style="--w: 40%"></span></div>
+                <p class="score-row__tip">3 分钟演示清晰 · 现场精准答辩</p>
+              </div>
+            </div>
+
+            <!-- Ultra-compact 4-pill quick check -->
+            <div class="quick-pills">
+              <span>河北工程大学在校生</span>
+              <span>每队 1–5 人</span>
+              <span>须可运行演示</span>
+              <span>团队保留知识产权</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PARTNERS & FINALE CTA ==================== -->
+    <section class="section finale" id="partners">
+      <div class="container">
+        <div class="partners-strip reveal">
+          <div class="partner-group">
+            <span class="partner-role">主办 · 联合主办</span>
+            <div class="partner-logos">
+              <div class="partner-badge">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6" />
+                  <path d="M8 20H16M12 17V20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+                <span>河北工程大学计算机协会</span>
+              </div>
+              <div class="partner-badge">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3L14.5 9.5L21 12L14.5 14.5L12 21L9.5 14.5L3 12L9.5 9.5L12 3Z" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>夏野黑客松</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="partner-group">
+            <span class="partner-role">赞助与支持单位</span>
+            <div class="partner-logos">
+              <div class="partner-badge partner-badge--accent">
+                <svg viewBox="0 0 28 24" fill="none" aria-hidden="true">
+                  <circle cx="10" cy="12" r="6.5" stroke="#2EE6D6" stroke-width="2" />
+                  <path d="M15 5.5H18.5C22.1 5.5 25 8.4 25 12C25 15.6 22.1 18.5 18.5 18.5H15V5.5Z" stroke="#FF9F43" stroke-width="2" />
+                </svg>
+                <span>OpenDev</span>
+              </div>
+              <div class="partner-badge">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12H19M12 5L19 12L12 19" stroke="#4F8BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>连尚集团</span>
+              </div>
+              <div class="partner-badge">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <polygon points="12,3 21,8.5 21,15.5 12,21 3,15.5 3,8.5" stroke="#4F8BFF" stroke-width="1.6" />
+                </svg>
+                <span>连尚孵化器</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="finale-card spotlight-card reveal">
+          <div class="finale-card__aura" aria-hidden="true"></div>
+          <span class="mono-tag">READY TO STEER // 2026</span>
+          <h2 class="finale-card__title">把你看见的问题，做成作品</h2>
+          <div class="finale-card__actions">
+            <button class="btn-primary magnetic" id="openPassFinale" data-strength="20" type="button">
+              <span class="btn-primary__glow" aria-hidden="true"></span>
+              <span class="btn-primary__text">生成我的参赛登船证</span>
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+          <p class="finale-card__note">正式报名与组队渠道请关注河北工程大学计算机协会通知、海报与官方大群</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>HEBEU COMPUTER ASSOCIATION × XIAYE HACKATHON</span>
+      <span>2026.11.23 — 2026.12.06</span>
+    </div>
+  </footer>
+
+  <!-- ==================== 3D HOLOGRAPHIC BOARDING PASS MODAL ==================== -->
+  <div class="modal" id="passModal" role="dialog" aria-modal="true" aria-labelledby="passModalTitle" hidden>
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal__panel">
+      <button class="modal__close" id="closeModal" aria-label="关闭弹窗" type="button">✕</button>
+
+      <div class="modal__grid">
+        <div class="modal__controls">
+          <span class="mono-tag">BOARDING PASS // 2026</span>
+          <h3 id="passModalTitle">定制你的远航登船证</h3>
+
+          <label class="field">
+            <span>队伍 / 航行者代号</span>
+            <input type="text" id="passNameInput" maxlength="16" placeholder="例如：星海造物队" value="航行者 01" />
+          </label>
+
+          <div class="field">
+            <span>选择意向主赛道</span>
+            <div class="pass-track-picks" id="passTrackPicks">
+              <button class="pick-btn is-active" data-pick="0" type="button">AI × 知识与探索</button>
+              <button class="pick-btn" data-pick="1" type="button">AI × 陪伴与交互</button>
+              <button class="pick-btn" data-pick="2" type="button">AI × 出海</button>
+            </div>
+          </div>
+
+          <div class="modal__btn-row">
+            <button class="btn-primary btn-primary--sm" id="downloadPassBtn" type="button">
+              <span class="btn-primary__text">保存纪念通行证 PNG</span>
+            </button>
+          </div>
+
+          <p class="modal__hint">
+            * 正式参赛报名请前往 <strong>河北工程大学计算机协会</strong> 官方通知、海报或选手大群完成登记。
+          </p>
+        </div>
+
+        <!-- Live Interactive 3D Holographic Card -->
+        <div class="pass-stage">
+          <div class="holo-pass" id="holoPass" data-theme="0">
+            <div class="holo-pass__foil" aria-hidden="true"></div>
+            <div class="holo-pass__glare" aria-hidden="true"></div>
+            <div class="holo-pass__top">
+              <div>
+                <span class="holo-pass__org">HEBEU × XIAYE</span>
+                <strong class="holo-pass__event">2026 AI HACKATHON</strong>
+              </div>
+              <span class="holo-pass__id" id="passCode">VOY-2601</span>
+            </div>
+
+            <div class="holo-pass__mid">
+              <span class="holo-pass__label">CREW / CAPTAIN</span>
+              <div class="holo-pass__name" id="passNameDisplay">航行者 01</div>
+              <div class="holo-pass__track" id="passTrackDisplay">AI × 知识与探索</div>
+            </div>
+
+            <div class="holo-pass__bottom">
+              <div>
+                <span>LAUNCH</span>
+                <strong>11.23 — 12.06</strong>
+              </div>
+              <div>
+                <span>QUOTA</span>
+                <strong>UP TO $500</strong>
+              </div>
+              <div class="holo-pass__barcode" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+          </div>
+          <span class="pass-stage__tip">移动光标体验 3D 全息折射</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="js/ocean-canvas.js"></script>
+  <script defer src="js/track-visuals.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
