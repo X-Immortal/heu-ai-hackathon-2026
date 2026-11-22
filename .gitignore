@@ -1,8 +1,8 @@
-node_modules/
-dist/
-.vite/
+**/node_modules/
+**/dist/
+**/.vite/
 *.local
-.impeccable/questions/
-.impeccable/mocks/
-.impeccable/review/
-.impeccable/build/
+**/.impeccable/questions/
+**/.impeccable/mocks/
+**/.impeccable/review/
+**/.impeccable/build/
