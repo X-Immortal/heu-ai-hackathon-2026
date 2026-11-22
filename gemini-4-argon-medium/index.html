@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>看见问题，就是开始 — 2026 HEU AI HACKATHON</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Custom Magnetic Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Top Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Interactive Particle / Starfield Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+  <div class="ambient-orb orb-3"></div>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <span class="brand-dot"></span>
+      <span class="brand-code">HEU.AI // 2026</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#tracks" class="magnetic" data-strength="18">赛道</a>
+      <a href="#perks" class="magnetic" data-strength="18">算力与奖项</a>
+      <a href="#timeline" class="magnetic" data-strength="18">赛程</a>
+      <a href="#radar" class="magnetic" data-strength="18">评审</a>
+    </nav>
+    <button class="nav-cta magnetic" data-strength="25" id="openModalBtnTop">
+      <span>立即起航</span>
+      <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <div class="hero-grid-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-pill reveal-up">
+          <span class="live-pulse"></span>
+          <span class="mono">HEU COMPUTER ASSOCIATION × XIA YE HACKATHON</span>
+        </div>
+
+        <h1 class="hero-title reveal-up">
+          <span class="title-line">看见<span class="gradient-cyan">问题</span>，</span>
+          <span class="title-line">就是<span class="gradient-violet">开始</span>。</span>
+        </h1>
+
+        <p class="hero-quote reveal-up">
+          “与其被技术的浪潮推着走，不如自己掌舵。这一次远航，我们不预设终点。”
+        </p>
+
+        <!-- Dynamic Countdown & Live Status -->
+        <div class="hero-status-bar reveal-up">
+          <div class="status-tag">
+            <span class="mono-label">STATUS</span>
+            <span class="status-val" id="phaseText">冲刺开发中</span>
+          </div>
+          <div class="countdown-group" id="countdownBox">
+            <div class="cd-unit">
+              <span class="cd-num" id="cdDays">07</span>
+              <span class="cd-lbl">DAYS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+              <span class="cd-num" id="cdHours">21</span>
+              <span class="cd-lbl">HRS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+              <span class="cd-num" id="cdMins">59</span>
+              <span class="cd-lbl">MIN</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+              <span class="cd-num" id="cdSecs">54</span>
+              <span class="cd-lbl">SEC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-actions reveal-up">
+          <button class="btn-primary magnetic" data-strength="35" id="openModalBtnHero">
+            <span class="btn-glow"></span>
+            <span class="btn-text">提交检查 & 报名通道</span>
+            <span class="btn-icon">↗</span>
+          </button>
+          <a href="#tracks" class="btn-ghost magnetic" data-strength="20">
+            <span>探索三大赛道</span>
+          </a>
+        </div>
+
+        <!-- Quick Specs Pills -->
+        <div class="hero-specs reveal-up">
+          <div class="spec-chip"><span class="chip-dot cyan"></span>全校跨专业 1–5 人</div>
+          <div class="spec-chip"><span class="chip-dot violet"></span>技术栈与模型不限</div>
+          <div class="spec-chip"><span class="chip-dot lime"></span>¥0 免报名费</div>
+          <div class="spec-chip"><span class="chip-dot amber"></span>可运行作品实机演示</div>
+        </div>
+      </div>
+
+      <!-- 3D Interactive Floating HUD Orb -->
+      <div class="hero-visual reveal-up">
+        <div class="orbital-stage" id="orbitalStage">
+          <div class="ring ring-outer"></div>
+          <div class="ring ring-mid"></div>
+          <div class="ring ring-inner"></div>
+          <div class="core-sphere">
+            <div class="core-scan"></div>
+            <span class="core-code mono">AI × REALITY</span>
+          </div>
+          <div class="floating-badge badge-1">
+            <span class="mono">$500</span>
+            <small>MAX TOKEN</small>
+          </div>
+          <div class="floating-badge badge-2">
+            <span class="mono">12.06</span>
+            <small>LIVE DEMO</small>
+          </div>
+          <div class="floating-badge badge-3">
+            <span class="mono">100%</span>
+            <small>RUNNABLE</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INFINITE KINETIC MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span>SEE THE PROBLEM, START THE VOYAGE</span><i class="star">✦</i>
+        <span>HEU 2026 AI HACKATHON</span><i class="star">✦</i>
+        <span>OPENDEV × 连尚集团 × 连尚孵化器</span><i class="star">✦</i>
+        <span>NO PRESET DESTINATION</span><i class="star">✦</i>
+        <span>BUILD REAL & RUNNABLE AI</span><i class="star">✦</i>
+        <span>SEE THE PROBLEM, START THE VOYAGE</span><i class="star">✦</i>
+        <span>HEU 2026 AI HACKATHON</span><i class="star">✦</i>
+        <span>OPENDEV × 连尚集团 × 连尚孵化器</span><i class="star">✦</i>
+        <span>NO PRESET DESTINATION</span><i class="star">✦</i>
+        <span>BUILD REAL & RUNNABLE AI</span><i class="star">✦</i>
+      </div>
+    </div>
+
+    <!-- THREE TRACKS (3D TILT + SPOTLIGHT CARDS) -->
+    <section class="section" id="tracks">
+      <div class="section-header reveal-up">
+        <span class="section-tag mono">01 // THREE TRACKS</span>
+        <h2 class="section-title">三大主赛道 <span class="sub-accent">任选其一破局</span></h2>
+      </div>
+
+      <div class="tracks-grid">
+        <!-- Track 01 -->
+        <article class="tilt-card reveal-up" data-track="01">
+          <div class="card-spotlight"></div>
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="track-num mono">TRACK // 01</span>
+              <div class="track-icon cyan-glow">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/>
+                </svg>
+              </div>
+            </div>
+            <h3 class="track-name">AI × 知识与探索</h3>
+            <p class="track-core">破解资料散落、路径不清与查证困难</p>
+            <div class="track-tags">
+              <span>课程资料助手</span>
+              <span>文献梳理</span>
+              <span>领域问答</span>
+              <span>复杂讲解</span>
+            </div>
+            <div class="track-metric">
+              <span class="metric-label mono">FOCUS</span>
+              <span class="metric-val">知识可靠 · 查证清晰 · 切实可用</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Track 02 -->
+        <article class="tilt-card reveal-up" data-track="02">
+          <div class="card-spotlight"></div>
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="track-num mono">TRACK // 02</span>
+              <div class="track-icon violet-glow">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 21a9 9 0 1 0-9-9c0 1.5.4 2.9 1 4.1L3 21l4.9-1c1.2.6 2.6 1 4.1 1z"/>
+                  <path d="M9 10h.01M15 10h.01M9.5 14.5c1.5 1.2 3.5 1.2 5 0"/>
+                </svg>
+              </div>
+            </div>
+            <h3 class="track-name">AI × 陪伴与交互</h3>
+            <p class="track-core">需要被理解、被承接并获得持续协助</p>
+            <div class="track-tags">
+              <span>对话学习伙伴</span>
+              <span>生活工作助手</span>
+              <span>无障碍沟通</span>
+              <span>自然交互原型</span>
+            </div>
+            <div class="track-metric">
+              <span class="metric-label mono">FOCUS</span>
+              <span class="metric-val">交互自然 · 愿反复使用 · 真实试用</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Track 03 -->
+        <article class="tilt-card reveal-up" data-track="03">
+          <div class="card-spotlight"></div>
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-top">
+              <span class="track-num mono">TRACK // 03</span>
+              <div class="track-icon lime-glow">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+                </svg>
+              </div>
+            </div>
+            <h3 class="track-name">AI × 出海</h3>
+            <p class="track-core">贴合海外语言、习惯与渠道的真实需求</p>
+            <div class="track-tags">
+              <span>海外开发者工具</span>
+              <span>垂直跨境原型</span>
+              <span>本土化直演服务</span>
+            </div>
+            <div class="track-metric">
+              <span class="metric-label mono">FOCUS</span>
+              <span class="metric-val">用户明确 · 完整可演示 · 路径成立</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PERKS, COMPUTE SIMULATOR & PRIZES (BENTO GRID) -->
+    <section class="section" id="perks">
+      <div class="section-header reveal-up">
+        <span class="section-tag mono">02 // COMPUTE & REWARDS</span>
+        <h2 class="section-title">算力直充 & 奖项矩阵 <span class="sub-accent">边做边拿资源</span></h2>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Interactive Token Calculator Card -->
+        <div class="bento-card bento-token tilt-card reveal-up">
+          <div class="card-spotlight"></div>
+          <div class="bento-head">
+            <span class="bento-badge cyan">OpenDev 独家算力资助</span>
+            <span class="mono-dim">PER PERSON</span>
+          </div>
+          <div class="token-display">
+            <div class="token-amount">
+              <span class="currency">$</span>
+              <span class="counter-val" id="tokenDynamicVal">200</span>
+              <span class="unit">USD / 人</span>
+            </div>
+            <p class="token-hint">开赛前直发个人 · 邀请同入选选手 +$100/人</p>
+          </div>
+
+          <!-- Interactive Slider Simulator -->
+          <div class="token-simulator">
+            <div class="sim-row">
+              <span>成功邀请入选好友</span>
+              <span class="sim-badge mono"><span id="inviteCountText">0</span> 人</span>
+            </div>
+            <input type="range" id="inviteSlider" min="0" max="3" step="1" value="0" aria-label="邀请入选人数" />
+            <div class="sim-ticks mono">
+              <span>0人 ($200)</span>
+              <span>1人 ($300)</span>
+              <span>2人 ($400)</span>
+              <span>MAX ($500)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cash Prizes Card -->
+        <div class="bento-card bento-prizes tilt-card reveal-up">
+          <div class="card-spotlight"></div>
+          <div class="bento-head">
+            <span class="bento-badge violet">综合奖池 & 单项荣誉</span>
+            <span class="mono-dim">11 AWARDS</span>
+          </div>
+
+          <div class="prize-tiers">
+            <div class="prize-tier tier-gold">
+              <div class="tier-info">
+                <span class="tier-rank mono">TOP 01</span>
+                <span class="tier-title">一等奖 × 1 支</span>
+              </div>
+              <div class="tier-money mono">¥<span class="count-up" data-target="1200">0</span></div>
+            </div>
+            <div class="prize-tier tier-silver">
+              <div class="tier-info">
+                <span class="tier-rank mono">TOP 02</span>
+                <span class="tier-title">二等奖 × 2 支</span>
+              </div>
+              <div class="tier-money mono">¥<span class="count-up" data-target="600">0</span></div>
+            </div>
+            <div class="prize-tier tier-bronze">
+              <div class="tier-info">
+                <span class="tier-rank mono">TOP 03</span>
+                <span class="tier-title">三等奖 × 3 支</span>
+              </div>
+              <div class="tier-money mono">¥<span class="count-up" data-target="200">0</span></div>
+            </div>
+          </div>
+
+          <div class="extra-awards">
+            <span class="award-pill">最佳知识探索奖 ×1</span>
+            <span class="award-pill">最佳陪伴交互奖 ×1</span>
+            <span class="award-pill">最佳出海潜力奖 ×1</span>
+            <span class="award-pill">最佳人气奖 ×1</span>
+            <span class="award-pill">全员有效提交证书</span>
+          </div>
+        </div>
+
+        <!-- Incubation & Internship Card -->
+        <div class="bento-card bento-career tilt-card reveal-up">
+          <div class="card-spotlight"></div>
+          <div class="career-icon">🚀</div>
+          <div class="career-body">
+            <h3>连尚集团直通实习</h3>
+            <p>综合奖、单项奖及评委举荐选手直接对接企业实习席位</p>
+          </div>
+          <div class="career-tag mono">INTERNSHIP PASS</div>
+        </div>
+
+        <div class="bento-card bento-incubate tilt-card reveal-up">
+          <div class="card-spotlight"></div>
+          <div class="career-icon">⚡</div>
+          <div class="career-body">
+            <h3>连尚孵化器 & 早期投资</h3>
+            <p>优秀项目入驻连尚孵化器，持续获得云资源、技术与资本赋能</p>
+          </div>
+          <div class="career-tag mono">SEED INCUBATOR</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TIMELINE -->
+    <section class="section" id="timeline">
+      <div class="section-header reveal-up">
+        <span class="section-tag mono">03 // VOYAGE SCHEDULE</span>
+        <h2 class="section-title">赛程节点 <span class="sub-accent">全程线上 · 实机路演</span></h2>
+      </div>
+
+      <div class="timeline-track reveal-up">
+        <div class="timeline-line">
+          <div class="timeline-fill" id="timelineFill"></div>
+        </div>
+
+        <div class="timeline-nodes">
+          <div class="t-node active" data-step="1">
+            <div class="node-dot"></div>
+            <span class="node-date mono">11.23 00:00</span>
+            <h3 class="node-title">正式开赛</h3>
+            <p class="node-desc">规则生效 · 算力就位 · 自由破题</p>
+          </div>
+
+          <div class="t-node active" data-step="2">
+            <div class="node-dot pulse"></div>
+            <span class="node-date mono">11.23 — 11.30</span>
+            <h3 class="node-title">开发与提交</h3>
+            <p class="node-desc">11.30 23:59 前交可运行作品、源码与孵化表</p>
+          </div>
+
+          <div class="t-node" data-step="3">
+            <div class="node-dot"></div>
+            <span class="node-date mono">12.01 — 12.05</span>
+            <h3 class="node-title">线上初评</h3>
+            <p class="node-desc">核查源码与实机演示 · 遴选决赛入围名单</p>
+          </div>
+
+          <div class="t-node" data-step="4">
+            <div class="node-dot"></div>
+            <span class="node-date mono">12.06 19:00</span>
+            <h3 class="node-title">路演开奖</h3>
+            <p class="node-desc">专家现场质询点评 · 当场开奖与孵化对接</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE EVALUATION RADAR & RED LINES -->
+    <section class="section" id="radar">
+      <div class="section-header reveal-up">
+        <span class="section-tag mono">04 // EVALUATION ENGINE</span>
+        <h2 class="section-title">百评审维度 <span class="sub-accent">触碰指标查看权重</span></h2>
+      </div>
+
+      <div class="eval-container reveal-up">
+        <!-- SVG Animated Radar -->
+        <div class="radar-box">
+          <svg viewBox="0 0 360 360" class="radar-svg" id="radarSvg">
+            <defs>
+              <linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.55" />
+              </linearGradient>
+            </defs>
+            <!-- Background Pentagon Grids -->
+            <g class="radar-grid">
+              <polygon points="180,40 313,137 262,293 98,293 47,137" />
+              <polygon points="180,75 280,148 242,265 118,265 80,148" />
+              <polygon points="180,110 246,158 221,236 139,236 114,158" />
+              <polygon points="180,145 213,169 200,208 160,208 147,169" />
+              <!-- Axes -->
+              <line x1="180" y1="180" x2="180" y2="40" />
+              <line x1="180" y1="180" x2="313" y2="137" />
+              <line x1="180" y1="180" x2="262" y2="293" />
+              <line x1="180" y1="180" x2="98" y2="293" />
+              <line x1="180" y1="180" x2="47" y2="137" />
+            </g>
+            <!-- Dynamic Data Polygon -->
+            <polygon id="radarPolygon" class="radar-area" points="180,40 313,137 246,271 114,271 100,154" fill="url(#radarGrad)" stroke="#00f0ff" stroke-width="2.5" />
+            <!-- Interactive Vertex Dots -->
+            <circle class="radar-vertex" data-idx="0" cx="180" cy="40" r="6" />
+            <circle class="radar-vertex" data-idx="1" cx="313" cy="137" r="6" />
+            <circle class="radar-vertex" data-idx="2" cx="246" cy="271" r="6" />
+            <circle class="radar-vertex" data-idx="3" cx="114" cy="271" r="6" />
+            <circle class="radar-vertex" data-idx="4" cx="100" cy="154" r="6" />
+          </svg>
+          <div class="radar-center-score">
+            <span class="mono" id="radarActiveScore">25%</span>
+            <small id="radarActiveLabel">问题真实性</small>
+          </div>
+        </div>
+
+        <!-- Metric Selector Bars -->
+        <div class="eval-list">
+          <div class="eval-item active" data-idx="0" data-score="25%" data-label="问题真实性">
+            <div class="eval-top">
+              <span class="eval-name">01 / 问题真实性</span>
+              <span class="eval-pts mono">25 PTS</span>
+            </div>
+            <div class="eval-bar"><div class="eval-bar-fill" style="width: 100%"></div></div>
+            <p class="eval-sub">源自可描述的真实痛点，服务对象清晰明确</p>
+          </div>
+
+          <div class="eval-item" data-idx="1" data-score="25%" data-label="方案与完成度">
+            <div class="eval-top">
+              <span class="eval-name">02 / 方案与完成度</span>
+              <span class="eval-pts mono">25 PTS</span>
+            </div>
+            <div class="eval-bar"><div class="eval-bar-fill" style="width: 100%"></div></div>
+            <p class="eval-sub">核心功能闭环可运行、实机演示稳定、Web类协会统一部署</p>
+          </div>
+
+          <div class="eval-item" data-idx="2" data-score="20%" data-label="技术实现">
+            <div class="eval-top">
+              <span class="eval-name">03 / 技术实现</span>
+              <span class="eval-pts mono">20 PTS</span>
+            </div>
+            <div class="eval-bar"><div class="eval-bar-fill" style="width: 80%"></div></div>
+            <p class="eval-sub">选型合理、工程规范可复现、拒绝浅层套壳与硬编码密钥</p>
+          </div>
+
+          <div class="eval-item" data-idx="3" data-score="20%" data-label="价值与潜力">
+            <div class="eval-top">
+              <span class="eval-name">04 / 价值与潜力</span>
+              <span class="eval-pts mono">20 PTS</span>
+            </div>
+            <div class="eval-bar"><div class="eval-bar-fill" style="width: 80%"></div></div>
+            <p class="eval-sub">对他人切实有用，具备持续迭代、产品化或创业孵化可能</p>
+          </div>
+
+          <div class="eval-item" data-idx="4" data-score="10%" data-label="表达与演示">
+            <div class="eval-top">
+              <span class="eval-name">05 / 表达与演示</span>
+              <span class="eval-pts mono">10 PTS</span>
+            </div>
+            <div class="eval-bar"><div class="eval-bar-fill" style="width: 45%"></div></div>
+            <p class="eval-sub">3页内产品说明 + 3分钟内视频/现场流畅答辩</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER / SPONSORS -->
+    <footer class="footer">
+      <div class="sponsors-row reveal-up">
+        <div class="sponsor-group">
+          <span class="sp-label mono">ORGANIZER</span>
+          <div class="sp-badges">
+            <span class="sp-pill">河北工程大学计算机协会</span>
+            <span class="sp-pill">夏野黑客松</span>
+          </div>
+        </div>
+        <div class="sponsor-group">
+          <span class="sp-label mono">POWERED BY</span>
+          <div class="sp-badges">
+            <span class="sp-pill highlight-cyan">OpenDev</span>
+            <span class="sp-pill highlight-blue">连尚集团</span>
+            <span class="sp-pill highlight-violet">连尚孵化器</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-cta reveal-up">
+        <h2>准备好掌舵了吗？</h2>
+        <button class="btn-primary magnetic" data-strength="30" id="openModalBtnFooter">
+          <span class="btn-glow"></span>
+          <span class="btn-text">开启参赛自检清单</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+
+      <div class="footer-bottom mono">
+        <span>© 2026 HEU COMPUTER ASSOCIATION</span>
+        <span>SEE THE PROBLEM · START THE VOYAGE</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- INTERACTIVE PRE-FLIGHT CHECKLIST MODAL -->
+  <div class="modal-backdrop" id="checklistModal" aria-hidden="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <span class="mono-label">PRE-FLIGHT CHECKLIST</span>
+          <h3>参赛与提交自检终端</h3>
+        </div>
+        <button class="modal-close" id="closeModalBtn" aria-label="关闭">✕</button>
+      </div>
+
+      <div class="checklist-progress">
+        <div class="cp-info">
+          <span>准备就绪度</span>
+          <span class="mono" id="checkPercent">0%</span>
+        </div>
+        <div class="cp-bar"><div class="cp-fill" id="checkFill"></div></div>
+      </div>
+
+      <div class="checklist-items" id="checklistContainer">
+        <label class="check-row">
+          <input type="checkbox" class="check-input" />
+          <span class="check-box"></span>
+          <span class="check-text">1–5 人跨专业/单人组队，选定单一主赛道</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" class="check-input" />
+          <span class="check-box"></span>
+          <span class="check-text">核心功能可现场/远程实机运行（拒绝纯 PPT）</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" class="check-input" />
+          <span class="check-box"></span>
+          <span class="check-text">完整源码 + 依赖运行说明，无硬编码密钥</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" class="check-input" />
+          <span class="check-box"></span>
+          <span class="check-text">≤3 页产品说明（问题、用户、方案、验证）</span>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" class="check-input" />
+          <span class="check-box"></span>
+          <span class="check-text">填写连尚孵化器申请表 & 标注开源素材来源</span>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <div class="channel-notice">
+          <span class="live-pulse"></span>
+          <span>通过河北工程大学计算机协会官方通知/宣讲群登记报名并领取 $200 OpenDev 算力额度</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
